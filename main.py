@@ -24,7 +24,7 @@ class MainPage(webapp2.RequestHandler):
 
 class TakeSomeTime(webapp2.RequestHandler):
   def get(self):
-    wait_time = random.randint(100, 500) / 1000
+    wait_time = random.random()
     time.sleep(wait_time)
     self.response.headers['Content-Type'] = 'text/plain'
     self.response.write('Waited for {}ms before returning'.format(wait_time))
@@ -33,9 +33,12 @@ class TakeSomeTime(webapp2.RequestHandler):
 class PossibleException(webapp2.RequestHandler):
   def get(self):
     divisor = random.randint(0, 10)
-    answer = 42 / divisor
     self.response.headers['Content-Type'] = 'text/plain'
+  try:
+    answer = 42 / divisor
     self.response.write('Divided 42 by {}, got {}'.format(divisor, answer))
+  except ZeroDivisionError:
+    self.response.write('Error: attempted to divide by zero')
 
 
 
