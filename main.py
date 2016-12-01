@@ -13,6 +13,8 @@
 # limitations under the License.
 #
 import webapp2
+import time
+import random
 
 class MainPage(webapp2.RequestHandler):
   def get(self):
@@ -20,6 +22,27 @@ class MainPage(webapp2.RequestHandler):
     self.response.write('Hello, Universe!')
 
 
+class TakeSomeTime(webapp2.RequestHandler):
+  def get(self):
+    wait_time = random.randint(100, 500);
+    time.sleep(wait_time);
+    self.response.headers['Content-Type'] = 'text/plain'
+    self.response.write('Waited for ' + wait_time + 'ms before returning');
+
+
+class PossibleException(webapp2.RequestHandler):
+  def get(self):
+    exception_seed = random.randint(0, 10)
+    answer = 42 / exception_seed
+    self.response.headers['Content-Type'] = 'text/plain'
+    self.response.write('Divided 42 by ' + exception_seed + ', got ' + answer)
+
+
+
 app = webapp2.WSGIApplication([
   ('/', MainPage),
+  ('/time', TakeSomeTime),
+  ('/divide', PossibleException),
 ], debug=True)
+
+
