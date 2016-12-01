@@ -24,18 +24,18 @@ class MainPage(webapp2.RequestHandler):
 
 class TakeSomeTime(webapp2.RequestHandler):
   def get(self):
-    wait_time = random.randint(100, 500);
-    time.sleep(wait_time);
+    wait_time = random.randint(100, 500) / 1000
+    time.sleep(wait_time)
     self.response.headers['Content-Type'] = 'text/plain'
-    self.response.write('Waited for ' + wait_time + 'ms before returning');
+    self.response.write('Waited for {}ms before returning'.format(wait_time))
 
 
 class PossibleException(webapp2.RequestHandler):
   def get(self):
-    exception_seed = random.randint(0, 10)
-    answer = 42 / exception_seed
+    divisor = random.randint(0, 10)
+    answer = 42 / divisor
     self.response.headers['Content-Type'] = 'text/plain'
-    self.response.write('Divided 42 by ' + exception_seed + ', got ' + answer)
+    self.response.write('Divided 42 by {}, got {}'.format(divisor, answer))
 
 
 
